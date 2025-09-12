@@ -1,0 +1,32 @@
+NAME = violence
+
+SRC_DIR = srcs
+BUILD_DIR = build
+
+CC = c++
+CFLAGS = -std=c++98 -Wall -Wextra -Werror
+
+SRC_FILES = main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
+SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+OBJS = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRCS))
+
+RM = rm -f
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $@
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	$(RM) -r $(BUILD_DIR)
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

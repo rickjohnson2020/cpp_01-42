@@ -16,13 +16,13 @@ int main(int ac, char** av) {
 	std::string str2 = av[3];
 	unsigned long str1Size = ((std::string)str1).size();
 	
-	std::ifstream ifs(filename);
+	std::ifstream ifs(filename.c_str());
 	if (!ifs.is_open()) {
 		std::cerr << "Error opening file for reading" << std::endl;
 		return 1;
 	}
 
-	std::ofstream ofs(filename + ".replace");
+	std::ofstream ofs((filename + ".replace").c_str());
 	if (!ofs.is_open()) {
 		std::cerr << "Error opening file for writing" << std::endl;
 		return 1;
@@ -32,7 +32,7 @@ int main(int ac, char** av) {
 		std::size_t str1Pos = line.find(str1);
 		std::size_t startPos = 0;
 		while (str1Pos != std::string::npos) {
-			ofs << line.substr(startPos, str1Pos- startPos) << str2;
+			ofs << line.substr(startPos, str1Pos - startPos) << str2;
 			startPos = str1Pos + str1Size;
 			str1Pos = line.find(str1, startPos);
 		}
